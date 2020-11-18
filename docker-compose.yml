@@ -1,28 +1,20 @@
-version: '3'
+version: '3.4'
 services:
-    node:
-        build: .
-        container_name: "node"
-        ports:
-            - "8080:8080"
-        depends_on:
-            - mongo
-        links:
-            - mongo
-    mongo:
-        image: mongo:latest
-        ports:
-            - "27017:27017"
-        logging:
-            driver: none
-        environment:
-            MONGO_URI: mongodb://localhost:27017
-            MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_INITDB_ROOT_PASSWORD: rootpassword
-        volumes:
-            - mongodb:/data/db
-            - mongodb_config:/data/configdb
-volumes:
-    mongodb:
-    mongodb_config:
-        
+  nodejs:
+    container_name: nodejs
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+    links:
+      - "mongo"
+    depends_on:
+      - "mongo"
+  
+  mongo:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - "27018:27017"
+    logging:
+      driver: none

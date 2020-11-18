@@ -3,28 +3,20 @@ const port = '8080'
 
 const server = require('./controller')
 var MongoClient = require('mongodb').MongoClient;
-
 const dbName = "introtonode";
-
-const client = new MongoClient("mongodb://localhost:27017", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+var url = "mongodb+srv://IntroToNodeJs:azerty@cluster0.bvesz.mongodb.net/intronode?retryWrites=true&w=majority";
 
 // Connect to database
-client.connect(function (err, db) {
-   
+MongoClient.connect(url, { useUnifiedTopology: true }, function (err, db) {
+
     if (err)
         throw err;
 
-    db = client.db('dbName');
-    console.log("MongoDB is up!");
-    console.log("Database: " + dbName);
-
-     //Write databse Insert/Update/Query code here..
-                
+    var dbo = db.db("intronode");
 });
 
 server.listen(port, host, () => {
     console.log(`Server running on http://localhost:${port}/`)
 })
+
+exports.client;
